@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="74425" started-at="2020-04-08T06:21:49Z" finished-at="2020-04-08T06:23:04Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="74425" started-at="2020-04-08T06:21:49Z" finished-at="2020-04-08T06:23:04Z">
+      <class name="mmpsqadron_test.AddFeesTest">
+        <test-method status="PASS" signature="addNewFee()[pri:0, instance:mmpsqadron_test.AddFeesTest@4501b7af]" name="addNewFee" duration-ms="74406" started-at="2020-04-08T06:21:49Z" description="Add new fees test to a patient account using patient SSN" finished-at="2020-04-08T06:23:04Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- addNewFee -->
+      </class> <!-- mmpsqadron_test.AddFeesTest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
