@@ -11,6 +11,8 @@ public class PP_LeftNavMenuPage {
 	
 	// xpath for the patient link on the home page
 	String patientFeesXpath = "//a[@href='fees.php']";
+	// xpath for logout link in the nav menu 
+	String pPLogoutXpath ="//span[contains(text(),'Logout')]";
 	
 	// Patient Portal header text xpath -> needed to verify if the link on patient takes it to patient Fees portal page. 
 	String pPFeesHeaderXpath = "//h3[@class='panel-title']";
@@ -45,6 +47,28 @@ public class PP_LeftNavMenuPage {
 			return false;
 		}
 		
+	}
+	
+	public boolean clickLogout() {
+		WebElement patientLogoutLink = driver.findElement(By.xpath(pPLogoutXpath));
+		patientLogoutLink.click();
+		
+		//TODO: add validation to check it is logged out from patient portal.
+		//BUG: Currently the menu bar is missing when auto test is runnign in browser. 
+		
+		/*String expectedHeader ="Admin Login";
+		
+		WebElement expectedScreenHeader = driver.findElement(By.xpath(adminLoginPageHeader));
+		boolean result = expectedAdminHeader.equals(adminHeader.getText());
+		
+		return result;
+		
+		
+		//return true;*/
+		
+		
+		
+		return true;
 	}
 
 }

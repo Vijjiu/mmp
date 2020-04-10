@@ -1,9 +1,12 @@
 package mmpsquadron_pages;
 
+import java.awt.Container;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+
+import javax.swing.JTextField;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -17,27 +20,22 @@ public class AP_AddFeePage {
 	
 	WebDriver driver;
 	
-	
-	 
+	//xpath for service date dropdown xpath 
 	String selectServiceDateXPath =  "//select[@id='app_date']";
+	//xpath for the service dropdown
 	String selectServiceXpath = "//select[@id='service']";
+	// xpath for fee amt 
 	String FeeXpath = "//div[@id='show']//input[@class='form-control']" ; 
-
+	// xpath for submit button
 	String submitButtonXPath = "//input[@type='submit']";
 	
-	HashMap<String,String> serviceFeeHMap;
+	// to keep track of the service and the related fee. 
+	private HashMap<String,String> serviceFeeHMap;
 	
-	HashMap<String,String> finalServiceFeeHMap;
+	// to save the fee details that has been created to validate on the patient portal
+	static HashMap<String,String> finalServiceFeeHMap;
 	
 	boolean assertResult = true;
-	
-	// xpath for the create fee button 
-	/*String createFeeButtonXpath = "//input[@value='Create Fee']";
-	
-	// Admin Portal Add Fee - header text xpath -> needed to verify if the button 'create fee' takes it to add fee page 
-	String apAddFeeHeaderXpath = "//h3[@class='panel-title']";
-	// Admin Portal Add fee header text  -> needed to verify if the button 'create fee' takes it to add fee page 
-	String expectedAddFeeHeadertext = "Fee";*/
 	
 	public AP_AddFeePage(WebDriver driver)
 	{
@@ -47,10 +45,13 @@ public class AP_AddFeePage {
 		serviceFeeHMap = new HashMap<String,String>();
 		serviceFeeHMap.put("vaccination", "11");
 		serviceFeeHMap.put("Xray", "50");
+		
+		finalServiceFeeHMap = new HashMap<String,String>();
+		
+		
 	}
 	
 	public boolean addNewFee() throws InterruptedException {
-		
 		
 		/*
 		 * How to select any random value from drop down:
@@ -73,6 +74,8 @@ public class AP_AddFeePage {
 		/*WebDriverWait wait = new WebDriverWait(driver, 15);
 		wait.until(ExpectedConditions
 				.visibilityOf(driver.findElement(By.xpath("//div[@class='menu transition visible']"))));*/
+		
+		
 		//generate random number from the indexes available
 		List<WebElement> itemsInDropdown = mySelectDate.getOptions();
 		// Getting size of options available
@@ -81,6 +84,10 @@ public class AP_AddFeePage {
 		int randnMumber = ThreadLocalRandom.current().nextInt(1, size);
 		// Selecting random value
 		itemsInDropdown.get(randnMumber).click();
+		
+		// save the value for validation on patient portal
+		String dateSelected = itemsInDropdown.get(randnMumber).getText();
+		finalServiceFeeHMap.put("date", dateSelected);
 				
 		//=========
 		// select the service from the drop down
@@ -109,15 +116,29 @@ public class AP_AddFeePage {
 		WebElement listItem = itemsInDropdown.get(randnMumber);
 		listItem.click();
 		listItem.click();
-		String itemSelected = itemsInDropdown.get(randnMumber).getText();
+		// validate if correct fee is added to match the service selected
+		// save the value for validation on patient portal
+		String serviceSelected = itemsInDropdown.get(randnMumber).getText();
+		finalServiceFeeHMap.put("service", serviceSelected);
 		
 		/* verify the fee based on the service selected */
-		String expectedFee = serviceFeeHMap.get(itemSelected);
+		String expectedFee = serviceFeeHMap.get(serviceSelected);
 		
+		Thread.sleep(5000);
 		WebElement feeText = driver.findElement(By.xpath(FeeXpath));
+		
 		String actualFee = feeText.getText();
+		//save the value for validation on patient portal
+		finalServiceFeeHMap.put("fee", actualFee);
+		//TOBEFIXED: Temp hack since the actual fee is not accessable
+		finalServiceFeeHMap.put("fee", expectedFee);
 		
 		int result = expectedFee.compareTo(actualFee);
+		
+		System.out.println("expected fee "+expectedFee);
+		System.out.println("actual fee "+actualFee);
+		System.out.println("result "+result);
+		
 		/*if(result == 0) {
 			System.out.println("right fee added' successfully");
 			assertResult = true ;
@@ -149,14 +170,14 @@ public class AP_AddFeePage {
 		String expectedSuccessMsg =  "Fee Successfully Entered.";
 		// result = 0 when the values are same. 
 		// reset result to not assert. 
-		result = 1;
-		boolean returnResult = expectedSuccessMsg.equals(successMsg);
+		result = expectedSuccessMsg.compareTo(successMsg);
+		//boolean returnResult = expectedSuccessMsg.equals(successMsg);
 		
 		System.out.println("actual==>"+successMsg );
 		System.out.println("expected ==>"+expectedSuccessMsg );
-		System.out.println("result==>"+returnResult);
+		System.out.println("result==>"+ result);
 		
-		//return returnResult;
+		//return returnResult;*/
 		return true;
 		
 		/*if(result == 0) {

@@ -11,7 +11,7 @@ public class AP_PortalPage {
 	
 	WebDriver driver;
 	
-	// xpath for the patient serach box and search button on admin portal to search for patien with ssn
+	// xpath for the patient search box and search button on admin portal to search for patient with ssn
 	String patientSearchSSNTextXpath = "//input[@id='search']";
 	String patientSearchButtonXpath = "//input[@class='tfbutton']";
 	
@@ -73,7 +73,7 @@ public class AP_PortalPage {
 	}
 	
 	/*yet to fix this part */
-	public boolean validatePatientSearchResult(HashMap hMap)
+	/*public boolean validatePatientSearchResult(HashMap hMap)
 	{
 		boolean result = false;
 		String trData = driver.findElement((By.xpath("//table[@class='table']/tbody/tr[1]"))).getText();
@@ -93,35 +93,10 @@ public class AP_PortalPage {
 		}
 		return result;
 		
-	}
+	}*/
 	
 	/*yet to fix this */
-	public boolean validateApptDetailsinScheduleApptPage(HashMap hMap)
-	{
-		boolean result = false;
-		//Click on ScheduleAppointments Tab
-		driver.findElement(By.xpath("//li[4]//a[1]")).click();
-		String date = driver.findElement(By.xpath("(//h3[@class='panel-title'])[2]")).getText();
-		String time = driver.findElement(By.xpath("//a[contains(text(),'Time : 10Am')]")).getText().split("\\:")[1].trim();
-		String doctor = driver.findElement(By.xpath("//a[contains(text(),'Provider:Beth')]")).getText().split("\\:")[1].trim();
-		String sym = driver.findElement(By.xpath("//a[contains(text(),'Symptoms:Fever')]")).getText().split("\\:")[1].trim();
-		if(hMap.get("date").equals(date)&& 
-				hMap.get("time").equals(time)&&
-				hMap.get("sym").equals(sym)&&
-				hMap.get("doctor").equals(doctor))
-		{
-			System.out.println("Data matching in ScheduleAppointment Page");
-			result = true;
-		}
-		else
-		{
-			result = false;
-			System.out.println("Data not matching in ScheduleAppointment Page");
-		}
-		
-		//clickPatientLink();
-		return result;
-	}
+	//TODO: add validation to check the patient details returned
 	
 	
 	/* Function to click on the patent name to see details of the patient*/

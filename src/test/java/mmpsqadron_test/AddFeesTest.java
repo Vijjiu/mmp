@@ -14,6 +14,7 @@ import mmpsquadron_pages.AP_PatientDetailPage;
 import mmpsquadron_pages.AP_PortalPage;
 import mmpsquadron_pages.PP_LeftNavMenuPage;
 import mmpsquadron_pages.PP_LoginPage;
+import mmpsquadron_pages.PP_PayFeesPage;
 
 public class AddFeesTest {
 	
@@ -94,6 +95,13 @@ public class AddFeesTest {
 		//click on fee link
 		sa.assertTrue(pPLeftNavMenuObj.clickFeesLink());
 		
+		
+		//TODO: add validation of the fee listed with the fee added by the admin using values stored in hashmap.
+		PP_PayFeesPage patientPayFeeObj = new PP_PayFeesPage(driver);
+		sa.assertTrue(patientPayFeeObj.validateFeeDetail());
+		
+		// finally assert all
+		//sa.assertAll();
 		
 		
 	}
